@@ -7,13 +7,11 @@
  * Licensed under the MIT license.
  *   https://github.com/power-assert-js/empower/blob/master/MIT-LICENSE.txt
  */
+var empowerCore = require('empower-core');
 var defaultOptions = require('./lib/default-options');
-var Decorator = require('./lib/decorator');
 var capturable = require('./lib/capturable');
-var create = require('object-create');
-var slice = Array.prototype.slice;
-var extend = require('xtend/mutable');
-var define = require('define-properties');
+var extend = require('xtend');
+var define = require('./lib/define-properties');
 
 /**
  * Enhance Power Assert feature to assert function/object.
@@ -23,59 +21,44 @@ var define = require('define-properties');
  * @return enhanced assert function/object
  */
 function empower (assert, formatter, options) {
-    var typeOfAssert = (typeof assert);
-    var enhancedAssert;
-    if ((typeOfAssert !== 'object' && typeOfAssert !== 'function') || assert === null) {
-        throw new TypeError('empower argument should be a function or object.');
-    }
-    if (isEmpowered(assert)) {
-        return assert;
-    }
-    switch (typeOfAssert) {
-    case 'function':
-        enhancedAssert = empowerAssertFunction(assert, formatter, options);
-        break;
-    case 'object':
-        enhancedAssert = empowerAssertObject(assert, formatter, options);
-        break;
-    default:
-        throw new Error('Cannot be here');
-    }
+    var config = extend(defaultOptions(), options);
+    var eagerEvaluation = !(config.modifyMessageOnRethrow || config.saveContextOnRethrow);
+    var empowerCoreConfig = extend(config, {
+        modifyMessageBeforeAssert: function (beforeAssertEvent) {
+            var message = beforeAssertEvent.originalMessage;
+            if (!eagerEvaluation) {
+                return message;
+            }
+            return buildPowerAssertText(formatter, message, beforeAssertEvent.powerAssertContext);
+        },
+        onError: function (errorEvent) {
+            var e = errorEvent.error;
+            if(e.name !== 'AssertionError') {
+                throw e;
+            }
+            if (!errorEvent.powerAssertContext) {
+                throw e;
+            }
+            // console.log(JSON.stringify(errorEvent, null, 2));
+            if (config.modifyMessageOnRethrow) {
+                e.message = buildPowerAssertText(formatter, errorEvent.originalMessage, errorEvent.powerAssertContext);
+            }
+            if (config.saveContextOnRethrow) {
+                e.powerAssertContext = errorEvent.powerAssertContext;
+            }
+            throw e;
+        }
+    });
+    var enhancedAssert = empowerCore(assert, empowerCoreConfig);
     define(enhancedAssert, capturable());
     return enhancedAssert;
 }
 
-function empowerAssertObject (assertObject, formatter, options) {
-    var config = extend(defaultOptions(), options);
-    var target = config.destructive ? assertObject : create(assertObject);
-    var decorator = new Decorator(target, formatter, config);
-    return extend(target, decorator.enhancement());
-}
-
-function empowerAssertFunction (assertFunction, formatter, options) {
-    var config = extend(defaultOptions(), options);
-    if (config.destructive) {
-        throw new Error('cannot use destructive:true to function.');
-    }
-    var decorator = new Decorator(assertFunction, formatter, config);
-    var enhancement = decorator.enhancement();
-    var powerAssert;
-    if (typeof enhancement === 'function') {
-        powerAssert = function powerAssert () {
-            return enhancement.apply(null, slice.apply(arguments));
-        };
-    } else {
-        powerAssert = function powerAssert () {
-            return assertFunction.apply(null, slice.apply(arguments));
-        };
-    }
-    extend(powerAssert, assertFunction);
-    return extend(powerAssert, enhancement);
-}
-
-function isEmpowered (assertObjectOrFunction) {
-    return (typeof assertObjectOrFunction._capt === 'function') && (typeof assertObjectOrFunction._expr === 'function');
-}
+function buildPowerAssertText (formatter, message, context) {
+    // console.log(message);
+    var powerAssertText = formatter(context);
+    return message ? message + ' ' + powerAssertText : powerAssertText;
+};
 
 empower.defaultOptions = defaultOptions;
 module.exports = empower;
