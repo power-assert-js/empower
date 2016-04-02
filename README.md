@@ -16,13 +16,13 @@ Power Assert feature enhancer for assert function/object.
 
 DESCRIPTION
 ---------------------------------------
-`empower` is a core module of [power-assert](http://github.com/power-assert-js/power-assert) family. `empower` enhances standard `assert` function or any assert-like object to work with power-assert feature added code instrumented by [espower](http://github.com/power-assert-js/espower).
+`empower` is a core module of [power-assert](https://github.com/power-assert-js/power-assert) family. `empower` enhances standard `assert` function or any assert-like object to work with power-assert feature added code instrumented by [espower](https://github.com/power-assert-js/espower).
 
 
-`empower` works with standard `assert` function (best fit with [Mocha](http://visionmedia.github.io/mocha/)), and also supports assert-like objects/functions provided by various testing frameworks such as [QUnit](http://qunitjs.com/), [buster.js](http://docs.busterjs.org/en/latest/), and [nodeunit](https://github.com/caolan/nodeunit).
+`empower` works with standard `assert` function (best fit with [Mocha](https://visionmedia.github.io/mocha/)), and also supports assert-like objects/functions provided by various testing frameworks such as [QUnit](https://qunitjs.com/), [buster.js](https://docs.busterjs.org/en/latest/), and [nodeunit](https://github.com/caolan/nodeunit).
 
 
-Pull-requests, issue reports and patches are always welcomed. See [power-assert](http://github.com/power-assert-js/power-assert) project for more documentation.
+Pull-requests, issue reports and patches are always welcomed. See [power-assert](https://github.com/power-assert-js/power-assert) project for more documentation.
 
 
 CHANGELOG
@@ -39,7 +39,7 @@ API
 |:-----------------------|
 | `function` or `object` |
 
-`empower` function takes function or object(`originalAssert`) and `formatter` function created by [power-assert-formatter](http://github.com/power-assert-js/power-assert-formatter) then returns PowerAssert feature added function/object base on `originalAssert`.
+`empower` function takes function or object(`originalAssert`) and `formatter` function created by [power-assert-formatter](https://github.com/power-assert-js/power-assert-formatter) then returns PowerAssert feature added function/object base on `originalAssert`.
 If `destructive` option is falsy, `originalAssert` will be unchanged. If `destructive` option is truthy, `originalAssert` will be manipulated directly and returned `enhancedAssert` will be the same instance of `originalAssert`.
 
 
@@ -58,7 +58,7 @@ If `destructive` option is falsy, `originalAssert` will be unchanged. If `destru
 |:-----------|:--------------|
 | `function` | N/A           |
 
-formatter function created by [power-assert-formatter](http://github.com/power-assert-js/power-assert-formatter).
+formatter function created by [power-assert-formatter](https://github.com/power-assert-js/power-assert-formatter).
 
 
 #### options
@@ -132,7 +132,7 @@ If truthy, add `powerAssertContext` property to AssertionError on rethrow.
 
 Target patterns for power assert feature instrumentation.
 
-Pattern detection is done by [escallmatch](http://github.com/twada/escallmatch). Any arguments enclosed in bracket (for example, `[message]`) means optional parameters. Without bracket means mandatory parameters.
+Pattern detection is done by [escallmatch](https://github.com/twada/escallmatch). Any arguments enclosed in bracket (for example, `[message]`) means optional parameters. Without bracket means mandatory parameters.
 
 
 ### var options = empower.defaultOptions();
@@ -162,15 +162,15 @@ Returns default options object for `empower` function. In other words, returns
 
 SUPPORTED ASSERTION LIBRARIES
 ---------------------------------------
-* [Node assert API](http://nodejs.org/api/assert.html)
+* [Node assert API](https://nodejs.org/api/assert.html)
 * [Jxck/assert](https://github.com/Jxck/assert)
 
 
 ASSERTION LIBRARIES KNOWN TO WORK
 ---------------------------------------
-* [QUnit.assert](http://qunitjs.com/)
+* [QUnit.assert](https://qunitjs.com/)
 * [nodeunit](https://github.com/caolan/nodeunit)
-* [buster-assertions](http://docs.busterjs.org/en/latest/modules/buster-assertions/)
+* [buster-assertions](https://docs.busterjs.org/en/latest/modules/buster-assertions/)
 
 
 INSTALL
@@ -203,7 +203,7 @@ Then load (`empower` function is exported)
 
 AUTHOR
 ---------------------------------------
-* [Takuto Wada](http://github.com/twada)
+* [Takuto Wada](https://github.com/twada)
 
 
 CONTRIBUTORS
@@ -219,17 +219,17 @@ Licensed under the [MIT](https://github.com/power-assert-js/empower/blob/master/
 [npm-url]: https://npmjs.org/package/empower
 [npm-image]: https://badge.fury.io/js/empower.svg
 
-[bower-url]: http://badge.fury.io/bo/empower
+[bower-url]: https://badge.fury.io/bo/empower
 [bower-image]: https://badge.fury.io/bo/empower.svg
 
-[travis-url]: http://travis-ci.org/power-assert-js/empower
+[travis-url]: https://travis-ci.org/power-assert-js/empower
 [travis-image]: https://secure.travis-ci.org/power-assert-js/empower.svg?branch=master
 
 [depstat-url]: https://gemnasium.com/power-assert-js/empower
 [depstat-image]: https://gemnasium.com/power-assert-js/empower.svg
 
 [license-url]: https://github.com/power-assert-js/empower/blob/master/MIT-LICENSE.txt
-[license-image]: http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
+[license-image]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
 
 [codeclimate-url]: https://codeclimate.com/github/power-assert-js/empower
 [codeclimate-image]: https://codeclimate.com/github/power-assert-js/empower/badges/gpa.svg
@@ -237,5 +237,5 @@ Licensed under the [MIT](https://github.com/power-assert-js/empower/blob/master/
 [coverage-url]: https://coveralls.io/r/power-assert-js/empower?branch=master
 [coverage-image]: https://coveralls.io/repos/power-assert-js/empower/badge.svg?branch=master
 
-[gulp-url]: http://gulpjs.com/
-[gulp-image]: http://img.shields.io/badge/built_with-gulp-brightgreen.svg
+[gulp-url]: https://gulpjs.com/
+[gulp-image]: https://img.shields.io/badge/built_with-gulp-brightgreen.svg
