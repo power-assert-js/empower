@@ -19,7 +19,7 @@ DESCRIPTION
 `empower` is a core module of [power-assert](https://github.com/power-assert-js/power-assert) family. `empower` enhances standard `assert` function or any assert-like object to work with power-assert feature added code instrumented by [espower](https://github.com/power-assert-js/espower).
 
 
-`empower` works with standard `assert` function (best fit with [Mocha](https://visionmedia.github.io/mocha/)), and also supports assert-like objects/functions provided by various testing frameworks such as [QUnit](https://qunitjs.com/), [buster.js](https://docs.busterjs.org/en/latest/), and [nodeunit](https://github.com/caolan/nodeunit).
+`empower` works with standard `assert` function (best fit with [Mocha](http://visionmedia.github.io/mocha/)), and also supports assert-like objects/functions provided by various testing frameworks such as [QUnit](https://qunitjs.com/), [buster.js](http://docs.busterjs.org/en/latest/), and [nodeunit](https://github.com/caolan/nodeunit).
 
 
 Pull-requests, issue reports and patches are always welcomed. See [power-assert](https://github.com/power-assert-js/power-assert) project for more documentation.
@@ -170,7 +170,7 @@ ASSERTION LIBRARIES KNOWN TO WORK
 ---------------------------------------
 * [QUnit.assert](https://qunitjs.com/)
 * [nodeunit](https://github.com/caolan/nodeunit)
-* [buster-assertions](https://docs.busterjs.org/en/latest/modules/buster-assertions/)
+* [buster-assertions](http://docs.busterjs.org/en/latest/modules/buster-assertions/)
 
 
 INSTALL
@@ -237,5 +237,5 @@ Licensed under the [MIT](https://github.com/power-assert-js/empower/blob/master/
 [coverage-url]: https://coveralls.io/r/power-assert-js/empower?branch=master
 [coverage-image]: https://coveralls.io/repos/power-assert-js/empower/badge.svg?branch=master
 
-[gulp-url]: https://gulpjs.com/
+[gulp-url]: http://gulpjs.com/
 [gulp-image]: https://img.shields.io/badge/built_with-gulp-brightgreen.svg
