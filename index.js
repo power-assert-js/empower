@@ -33,7 +33,7 @@ function empower (assert, formatter, options) {
         },
         onError: function (errorEvent) {
             var e = errorEvent.error;
-            if(e.name !== 'AssertionError') {
+            if (e.name !== 'AssertionError') {
                 throw e;
             }
             if (!errorEvent.powerAssertContext) {
