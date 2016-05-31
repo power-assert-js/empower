@@ -73,6 +73,8 @@
     "url": "https://github.com/power-assert-js/empower.git"
   },
   "scripts": {
+    "preversion": "npm test",
+    "version": "npm run build && git add -A build",
     "bower": "bower install --config.interactive=false",
     "build": "npm prune && npm dedupe && gulp bundle",
     "test": "gulp test",
