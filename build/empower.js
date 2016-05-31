@@ -7,7 +7,7 @@
  *   author: Takuto Wada <takuto.wada@gmail.com>
  *   contributors: James Talmage
  *   homepage: https://github.com/power-assert-js/empower
- *   version: 1.1.0
+ *   version: 1.2.0
  *
  * call-signature:
  *   license: MIT (http://opensource.org/licenses/MIT)
@@ -163,13 +163,12 @@ module.exports = function defaultOptions () {
 'use strict';
 
 var defineProperty = _dereq_('core-js/library/fn/object/define-property');
-var foreach = _dereq_('core-js/library/fn/array/for-each');
+var forEach = _dereq_('core-js/library/fn/array/for-each');
 var keys = _dereq_('core-js/library/fn/object/keys');
 
-var defineProperties = function (object, map) {
-    var props = keys(map);
-    foreach(props, function (name) {
-        defineProperty(object, name, {
+module.exports = function defineProperties (obj, map) {
+    forEach(keys(map), function (name) {
+        defineProperty(obj, name, {
             configurable: true,
             enumerable: false,
             value: map[name],
@@ -177,8 +176,6 @@ var defineProperties = function (object, map) {
         });
     });
 };
-
-module.exports = defineProperties;
 
 },{"core-js/library/fn/array/for-each":7,"core-js/library/fn/object/define-property":11,"core-js/library/fn/object/keys":12}],5:[function(_dereq_,module,exports){
 'use strict';
@@ -1181,24 +1178,8 @@ function onSuccess(successEvent) {
 }
 
 },{}],65:[function(_dereq_,module,exports){
-'use strict';
-
-var defineProperty = _dereq_('core-js/library/fn/object/define-property');
-var forEach = _dereq_('core-js/library/fn/array/for-each');
-var keys = _dereq_('core-js/library/fn/object/keys');
-
-module.exports = function defineProperties (obj, map) {
-    forEach(keys(map), function (name) {
-        defineProperty(obj, name, {
-            configurable: true,
-            enumerable: false,
-            value: map[name],
-            writable: true
-        });
-    });
-};
-
-},{"core-js/library/fn/array/for-each":7,"core-js/library/fn/object/define-property":11,"core-js/library/fn/object/keys":12}],66:[function(_dereq_,module,exports){
+arguments[4][4][0].apply(exports,arguments)
+},{"core-js/library/fn/array/for-each":7,"core-js/library/fn/object/define-property":11,"core-js/library/fn/object/keys":12,"dup":4}],66:[function(_dereq_,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
