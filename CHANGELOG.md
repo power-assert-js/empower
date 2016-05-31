@@ -1,3 +1,11 @@
+## [1.2.0](https://github.com/power-assert-js/empower/releases/tag/v1.2.0) (2016-06-01)
+
+
+#### Features
+
+  * [Extract core functionality to empower-core](https://github.com/power-assert-js/empower/pull/22)
+
+
 ## [1.1.0](https://github.com/power-assert-js/empower/releases/tag/v1.1.0) (2015-11-07)
 
 
