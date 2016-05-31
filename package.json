@@ -17,7 +17,7 @@
     }
   ],
   "dependencies": {
-    "empower-core": "^0.5.0",
+    "empower-core": "^0.6.0",
     "core-js": "^2.0.0",
     "xtend": "^4.0.0"
   },
