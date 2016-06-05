@@ -17,7 +17,7 @@
     }
   ],
   "dependencies": {
-    "empower-core": "^0.6.0",
+    "empower-core": "^0.6.1",
     "core-js": "^2.0.0"
   },
   "devDependencies": {
