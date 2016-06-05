@@ -10,7 +10,7 @@
 var empowerCore = require('empower-core');
 var defaultOptions = require('./lib/default-options');
 var capturable = require('./lib/capturable');
-var extend = require('xtend');
+var assign = require('core-js/library/fn/object/assign');
 var define = require('./lib/define-properties');
 
 /**
@@ -21,9 +21,9 @@ var define = require('./lib/define-properties');
  * @return enhanced assert function/object
  */
 function empower (assert, formatter, options) {
-    var config = extend(defaultOptions(), options);
+    var config = assign(defaultOptions(), options);
     var eagerEvaluation = !(config.modifyMessageOnRethrow || config.saveContextOnRethrow);
-    var empowerCoreConfig = extend(config, {
+    var empowerCoreConfig = assign(config, {
         modifyMessageBeforeAssert: function (beforeAssertEvent) {
             var message = beforeAssertEvent.originalMessage;
             if (!eagerEvaluation) {
