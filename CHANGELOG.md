@@ -1,3 +1,10 @@
+### [1.2.1](https://github.com/power-assert-js/empower/releases/tag/v1.2.1) (2016-06-05)
+
+
+  * remove xtend from dependencies ([366f5c9](https://github.com/power-assert-js/empower/commit/366f5c909151ddce59f22999987717a7e2626d31))
+  * update empower-core to 0.6.1 ([9194fe8](https://github.com/power-assert-js/empower/commit/9194fe8d35906623934966e37a38a27ed4a23f1a))
+
+
 ## [1.2.0](https://github.com/power-assert-js/empower/releases/tag/v1.2.0) (2016-06-01)
 
 
