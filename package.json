@@ -24,7 +24,7 @@
     "acorn": "^3.0.4",
     "acorn-es7-plugin": "^1.0.12",
     "babel-core": "^5.8.33",
-    "blanket": "^1.1.7",
+    "blanket": "1.1.9",
     "browserify": "^13.0.0",
     "buster-assertions": "^0.10.4",
     "del": "^2.0.1",
