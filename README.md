@@ -19,7 +19,7 @@ DESCRIPTION
 `empower` is a core module of [power-assert](https://github.com/power-assert-js/power-assert) family. `empower` enhances standard `assert` function or any assert-like object to work with power-assert feature added code instrumented by [espower](https://github.com/power-assert-js/espower).
 
 
-`empower` works with standard `assert` function (best fit with [Mocha](http://visionmedia.github.io/mocha/)), and also supports assert-like objects/functions provided by various testing frameworks such as [QUnit](https://qunitjs.com/), [buster.js](http://docs.busterjs.org/en/latest/), and [nodeunit](https://github.com/caolan/nodeunit).
+`empower` works with standard `assert` function (best fit with [Mocha](http://mochajs.org/)), and also supports assert-like objects/functions provided by various testing frameworks such as [QUnit](https://qunitjs.com/), [buster.js](http://docs.busterjs.org/en/latest/), and [nodeunit](https://github.com/caolan/nodeunit).
 
 
 Pull-requests, issue reports and patches are always welcomed. See [power-assert](https://github.com/power-assert-js/power-assert) project for more documentation.
