@@ -12,6 +12,7 @@ var defaultOptions = require('./lib/default-options');
 var capturable = require('./lib/capturable');
 var assign = require('core-js/library/fn/object/assign');
 var define = require('./lib/define-properties');
+var assert = require('assert');
 
 /**
  * Enhance Power Assert feature to assert function/object.
@@ -33,7 +34,7 @@ function empower (assert, formatter, options) {
         },
         onError: function (errorEvent) {
             var e = errorEvent.error;
-            if (e.name !== 'AssertionError') {
+            if (!/^AssertionError/.test(e.name)) {
                 throw e;
             }
             if (!errorEvent.powerAssertContext) {

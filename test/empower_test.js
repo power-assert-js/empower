@@ -68,7 +68,7 @@ test('default options behavior', function () {
             'assert(falsy)',
             '[{"value":0,"espath":"arguments/0"}]'
         ].join('\n'));
-        baseAssert.equal(e.name, 'AssertionError');
+        baseAssert(/^AssertionError/.test(e.name));
     }
 });
 
@@ -105,7 +105,7 @@ test('Bug reproduction. should not fail if argument is null Literal. ' + JSON.st
                 ]
             });
         }
-        baseAssert.equal(e.name, 'AssertionError');
+        baseAssert(/^AssertionError/.test(e.name));
     }
 });
 
@@ -140,7 +140,7 @@ test('assertion with optional message argument. ' + JSON.stringify(option), func
                 ]
             });
         }
-        baseAssert.equal(e.name, 'AssertionError');
+        baseAssert(/^AssertionError/.test(e.name));
     }
 });
 
@@ -175,7 +175,7 @@ test(JSON.stringify(option) + ' empowered function also acts like an assert func
                 ]
             });
         }
-        baseAssert.equal(e.name, 'AssertionError');
+        baseAssert(/^AssertionError/.test(e.name));
     }
 });
 
@@ -211,7 +211,7 @@ suite(JSON.stringify(option) + ' assertion method with one argument', function (
                     ]
                 });
             }
-            baseAssert.equal(e.name, 'AssertionError');
+            baseAssert(/^AssertionError/.test(e.name));
         }
     });
 });
@@ -250,7 +250,7 @@ suite(JSON.stringify(option) + ' assertion method with two arguments', function 
                     ]
                 });
             }
-            baseAssert.equal(e.name, 'AssertionError');
+            baseAssert(/^AssertionError/.test(e.name));
         }
     });
 
@@ -282,7 +282,7 @@ suite(JSON.stringify(option) + ' assertion method with two arguments', function 
                     ]
                 });
             }
-            baseAssert.equal(e.name, 'AssertionError');
+            baseAssert(/^AssertionError/.test(e.name));
         }
     });
 
@@ -314,7 +314,7 @@ suite(JSON.stringify(option) + ' assertion method with two arguments', function 
                     ]
                 });
             }
-            baseAssert.equal(e.name, 'AssertionError');
+            baseAssert(/^AssertionError/.test(e.name));
         }
     });
 });
@@ -355,7 +355,7 @@ suite(JSON.stringify(option) + ' yield for assertion inside generator', function
                         ]
                     });
                 }
-                baseAssert.equal(e.name, 'AssertionError');
+                baseAssert(/^AssertionError/.test(e.name));
             } catch (e) {
                 return done (e);
             }
@@ -418,7 +418,7 @@ suite(JSON.stringify(option) + ' await assertion inside async async function', f
                         ]
                     });
                 }
-                baseAssert.equal(e.name, 'AssertionError');
+                baseAssert(/^AssertionError/.test(e.name));
             } catch (e) {
                 return done (e);
             }
@@ -486,7 +486,7 @@ test('the case when assertion function call is not listed in patterns (even if m
         baseAssert.ok(false, 'AssertionError should be thrown');
     } catch (e) {
         baseAssert.equal(e.message, '0 == true', 'should not be empowered');
-        baseAssert.equal(e.name, 'AssertionError');
+        baseAssert(/^AssertionError/.test(e.name));
     }
 });
 

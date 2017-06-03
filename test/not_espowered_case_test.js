@@ -27,7 +27,7 @@ test(JSON.stringify(option) + ' argument is null Literal.', function () {
         eval('assert.equal(foo, null);');
         assert.ok(false, 'AssertionError should be thrown');
     } catch (e) {
-        baseAssert.equal(e.name, 'AssertionError');
+        baseAssert(/^AssertionError/.test(e.name));
         baseAssert((e.message === '\'foo\' == null' || e.message === '\"foo\" == null'));
         baseAssert(e.powerAssertContext === undefined);
     }
@@ -40,7 +40,7 @@ test(JSON.stringify(option) + ' empowered function also acts like an assert func
         eval('assert(falsy);');
         assert.ok(false, 'AssertionError should be thrown');
     } catch (e) {
-        baseAssert.equal(e.name, 'AssertionError');
+        baseAssert(/^AssertionError/.test(e.name));
         baseAssert.equal(e.message, '0 == true');
         baseAssert(e.powerAssertContext === undefined);
     }
@@ -54,7 +54,7 @@ suite(JSON.stringify(option) + ' assertion method with one argument', function (
             eval('assert.ok(falsy);');
             assert.ok(false, 'AssertionError should be thrown');
         } catch (e) {
-            baseAssert.equal(e.name, 'AssertionError');
+            baseAssert(/^AssertionError/.test(e.name));
             baseAssert.equal(e.message, '0 == true');
             baseAssert(e.powerAssertContext === undefined);
         }
@@ -69,7 +69,7 @@ suite(JSON.stringify(option) + ' assertion method with two arguments', function 
             eval('assert.equal(foo, bar);');
             assert.ok(false, 'AssertionError should be thrown');
         } catch (e) {
-            baseAssert.equal(e.name, 'AssertionError');
+            baseAssert(/^AssertionError/.test(e.name));
             baseAssert((e.message === '\'foo\' == \'bar\'' || e.message === '\"foo\" == \"bar\"'));
             baseAssert(e.powerAssertContext === undefined);
         }
@@ -81,7 +81,7 @@ suite(JSON.stringify(option) + ' assertion method with two arguments', function 
             eval('assert.equal("foo", bar);');
             assert.ok(false, 'AssertionError should be thrown');
         } catch (e) {
-            baseAssert.equal(e.name, 'AssertionError');
+            baseAssert(/^AssertionError/.test(e.name));
             baseAssert((e.message === '\'foo\' == \'bar\'' || e.message === '\"foo\" == \"bar\"'));
             baseAssert(e.powerAssertContext === undefined);
         }
@@ -93,7 +93,7 @@ suite(JSON.stringify(option) + ' assertion method with two arguments', function 
             eval('assert.equal(foo, "bar");');
             assert.ok(false, 'AssertionError should be thrown');
         } catch (e) {
-            baseAssert.equal(e.name, 'AssertionError');
+            baseAssert(/^AssertionError/.test(e.name));
             baseAssert((e.message === '\'foo\' == \'bar\'' || e.message === '\"foo\" == \"bar\"'));
             baseAssert(e.powerAssertContext === undefined);
         }
