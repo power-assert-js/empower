@@ -42,18 +42,7 @@ function empower (assert, formatter, options) {
             }
             // console.log(JSON.stringify(errorEvent, null, 2));
             if (config.modifyMessageOnRethrow) {
-                var poweredMessage = buildPowerAssertText(formatter, errorEvent.originalMessage, errorEvent.powerAssertContext);
-                if (e.code === 'ERR_ASSERTION') {
-                    e = new assert.AssertionError({
-                        message: poweredMessage,
-                        actual: e.actual,
-                        expected: e.expected,
-                        operator: e.operator,
-                        stackStartFunction: e.stackStartFunction
-                    });
-                } else {
-                    e.message = poweredMessage;
-                }
+                e.message = buildPowerAssertText(formatter, errorEvent.originalMessage, errorEvent.powerAssertContext);
             }
             if (config.saveContextOnRethrow) {
                 e.powerAssertContext = errorEvent.powerAssertContext;
