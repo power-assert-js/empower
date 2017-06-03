@@ -1,3 +1,11 @@
+### [1.2.2](https://github.com/power-assert-js/empower/releases/tag/v1.2.2) (2017-06-03)
+
+
+#### Bug Fixes
+
+* [dealing with `err.name` on Node v8](https://github.com/power-assert-js/empower/pull/25)
+
+
 ### [1.2.1](https://github.com/power-assert-js/empower/releases/tag/v1.2.1) (2016-06-05)
 
 
