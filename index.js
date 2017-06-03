@@ -12,6 +12,7 @@ var defaultOptions = require('./lib/default-options');
 var capturable = require('./lib/capturable');
 var assign = require('core-js/library/fn/object/assign');
 var define = require('./lib/define-properties');
+var assert = require('assert');
 
 /**
  * Enhance Power Assert feature to assert function/object.
@@ -33,7 +34,7 @@ function empower (assert, formatter, options) {
         },
         onError: function (errorEvent) {
             var e = errorEvent.error;
-            if (e.name !== 'AssertionError') {
+            if (!/^AssertionError/.test(e.name)) {
                 throw e;
             }
             if (!errorEvent.powerAssertContext) {
@@ -41,7 +42,18 @@ function empower (assert, formatter, options) {
             }
             // console.log(JSON.stringify(errorEvent, null, 2));
             if (config.modifyMessageOnRethrow) {
-                e.message = buildPowerAssertText(formatter, errorEvent.originalMessage, errorEvent.powerAssertContext);
+                var poweredMessage = buildPowerAssertText(formatter, errorEvent.originalMessage, errorEvent.powerAssertContext);
+                if (e.code === 'ERR_ASSERTION') {
+                    e = new assert.AssertionError({
+                        message: poweredMessage,
+                        actual: e.actual,
+                        expected: e.expected,
+                        operator: e.operator,
+                        stackStartFunction: e.stackStartFunction
+                    });
+                } else {
+                    e.message = poweredMessage;
+                }
             }
             if (config.saveContextOnRethrow) {
                 e.powerAssertContext = errorEvent.powerAssertContext;
