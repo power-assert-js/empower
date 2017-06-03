@@ -12,7 +12,6 @@ var defaultOptions = require('./lib/default-options');
 var capturable = require('./lib/capturable');
 var assign = require('core-js/library/fn/object/assign');
 var define = require('./lib/define-properties');
-var assert = require('assert');
 
 /**
  * Enhance Power Assert feature to assert function/object.
