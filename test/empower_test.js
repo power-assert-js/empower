@@ -219,7 +219,7 @@ suite(JSON.stringify(option) + ' assertion method with one argument', function (
 
 suite(JSON.stringify(option) + ' assertion method with two arguments', function () {
     test('both Identifier', function () {
-        var foo = 'foo', bar = 'bar';
+        var foo = 123, bar = 456;
         try {
             eval(weave('assert.equal(foo, bar);'));
             baseAssert.ok(false, 'AssertionError should be thrown');
@@ -228,7 +228,7 @@ suite(JSON.stringify(option) + ' assertion method with two arguments', function 
                 baseAssert.equal(e.message, [
                     'test/some_test.js',
                     'assert.equal(foo, bar)',
-                    '[{"value":"foo","espath":"arguments/0"},{"value":"bar","espath":"arguments/1"}]'
+                    '[{"value":123,"espath":"arguments/0"},{"value":456,"espath":"arguments/1"}]'
                 ].join('\n'));
             }
             if (option.saveContextOnRethrow) {
@@ -240,17 +240,18 @@ suite(JSON.stringify(option) + ' assertion method with two arguments', function 
                     },
                     "args":[
                         {
-                            "value":"foo",
-                            "events":[{"value":"foo","espath":"arguments/0"}]
+                            "value": 123,
+                            "events":[{"value":123,"espath":"arguments/0"}]
                         },
                         {
-                            "value":"bar",
-                            "events":[{"value":"bar","espath":"arguments/1"}]
+                            "value": 456,
+                            "events":[{"value":456,"espath":"arguments/1"}]
                         }
                     ]
                 });
             }
             baseAssert(/^AssertionError/.test(e.name));
+            baseAssert(!/123 == 456/.test(e.stack));
         }
     });
 
