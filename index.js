@@ -31,12 +31,12 @@ function empower (assert, formatter, options) {
             return false;
         }
         var ae = new assert.AssertionError({
-            actual: 'actual',
-            expected: 'expected',
+            actual: 123,
+            expected: 456,
             operator: '==='
         });
         ae.message = '[REPLACED MESSAGE]';
-        return /\'actual\' === \'expected\'/.test(ae.stack);
+        return !(/REPLACED MESSAGE/.test(ae.stack)) && /123 === 456/.test(ae.stack);
     })();
 
     var empowerCoreConfig = assign(config, {
