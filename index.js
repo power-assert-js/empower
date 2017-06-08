@@ -23,6 +23,22 @@ var define = require('./lib/define-properties');
 function empower (assert, formatter, options) {
     var config = assign(defaultOptions(), options);
     var eagerEvaluation = !(config.modifyMessageOnRethrow || config.saveContextOnRethrow);
+    var shouldRecreateAssertionError = (function () {
+        if (typeof assert !== 'function') {
+            return false;
+        }
+        if (typeof assert.AssertionError !== 'function') {
+            return false;
+        }
+        var ae = new assert.AssertionError({
+            actual: 'actual',
+            expected: 'expected',
+            operator: '==='
+        });
+        ae.message = '[REPLACED MESSAGE]';
+        return /\'actual\' === \'expected\'/.test(ae.stack);
+    })();
+
     var empowerCoreConfig = assign(config, {
         modifyMessageBeforeAssert: function (beforeAssertEvent) {
             var message = beforeAssertEvent.originalMessage;
@@ -41,7 +57,18 @@ function empower (assert, formatter, options) {
             }
             // console.log(JSON.stringify(errorEvent, null, 2));
             if (config.modifyMessageOnRethrow) {
-                e.message = buildPowerAssertText(formatter, errorEvent.originalMessage, errorEvent.powerAssertContext);
+                var poweredMessage = buildPowerAssertText(formatter, errorEvent.originalMessage, errorEvent.powerAssertContext);
+                if (shouldRecreateAssertionError) {
+                    e = new assert.AssertionError({
+                        message: poweredMessage,
+                        actual: e.actual,
+                        expected: e.expected,
+                        operator: e.operator,
+                        stackStartFunction: e.stackStartFunction
+                    });
+                } else {
+                    e.message = poweredMessage;
+                }
             }
             if (config.saveContextOnRethrow) {
                 e.powerAssertContext = errorEvent.powerAssertContext;
