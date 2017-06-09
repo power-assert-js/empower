@@ -230,6 +230,7 @@ suite(JSON.stringify(option) + ' assertion method with two arguments', function 
                     'assert.equal(foo, bar)',
                     '[{"value":123,"espath":"arguments/0"},{"value":456,"espath":"arguments/1"}]'
                 ].join('\n'));
+                baseAssert(!/123 == 456/.test(e.stack));
             }
             if (option.saveContextOnRethrow) {
                 baseAssert.deepEqual(e.powerAssertContext, {
@@ -251,7 +252,6 @@ suite(JSON.stringify(option) + ' assertion method with two arguments', function 
                 });
             }
             baseAssert(/^AssertionError/.test(e.name));
-            baseAssert(!/123 == 456/.test(e.stack));
         }
     });
 
