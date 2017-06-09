@@ -1,3 +1,11 @@
+### [1.2.3](https://github.com/power-assert-js/empower/releases/tag/v1.2.3) (2017-06-09)
+
+
+#### Bug Fixes
+
+* [Re-instantiate AssertionError under Node v8 (and v7)](https://github.com/power-assert-js/empower/pull/26)
+
+
 ### [1.2.2](https://github.com/power-assert-js/empower/releases/tag/v1.2.2) (2017-06-03)
 
 
