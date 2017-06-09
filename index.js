@@ -23,6 +23,22 @@ var define = require('./lib/define-properties');
 function empower (assert, formatter, options) {
     var config = assign(defaultOptions(), options);
     var eagerEvaluation = !(config.modifyMessageOnRethrow || config.saveContextOnRethrow);
+    var shouldRecreateAssertionError = (function isStackUnchanged () {
+        if (typeof assert !== 'function') {
+            return false;
+        }
+        if (typeof assert.AssertionError !== 'function') {
+            return false;
+        }
+        var ae = new assert.AssertionError({
+            actual: 123,
+            expected: 456,
+            operator: '==='
+        });
+        ae.message = '[REPLACED MESSAGE]';
+        return !(/REPLACED MESSAGE/.test(ae.stack)) && /123 === 456/.test(ae.stack);
+    })();
+
     var empowerCoreConfig = assign(config, {
         modifyMessageBeforeAssert: function (beforeAssertEvent) {
             var message = beforeAssertEvent.originalMessage;
@@ -39,9 +55,21 @@ function empower (assert, formatter, options) {
             if (!errorEvent.powerAssertContext) {
                 throw e;
             }
-            // console.log(JSON.stringify(errorEvent, null, 2));
-            if (config.modifyMessageOnRethrow) {
-                e.message = buildPowerAssertText(formatter, errorEvent.originalMessage, errorEvent.powerAssertContext);
+            var poweredMessage;
+            if (config.modifyMessageOnRethrow || config.saveContextOnRethrow) {
+                poweredMessage = buildPowerAssertText(formatter, errorEvent.originalMessage, errorEvent.powerAssertContext);
+                if (shouldRecreateAssertionError) {
+                    e = new assert.AssertionError({
+                        message: poweredMessage,
+                        actual: e.actual,
+                        expected: e.expected,
+                        operator: e.operator,
+                        stackStartFunction: e.stackStartFunction
+                    });
+                }
+            }
+            if (config.modifyMessageOnRethrow && !shouldRecreateAssertionError) {
+                e.message = poweredMessage;
             }
             if (config.saveContextOnRethrow) {
                 e.powerAssertContext = errorEvent.powerAssertContext;
