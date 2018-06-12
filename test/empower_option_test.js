@@ -305,7 +305,7 @@ suite('assert function empowerment', function () {
         var func = this.fakeAssertFunction;
         assert.throws(function () {
             empower(func, fakeFormatter, {destructive: true});
-        }, 'cannot use destructive:true to function\.');
+        }, '/cannot use destructive:true to function\./');
     });
 });
 
