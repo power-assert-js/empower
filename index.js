@@ -47,7 +47,7 @@ function empower (assert, formatter, options) {
             }
             return buildPowerAssertText(formatter, message, beforeAssertEvent.powerAssertContext);
         },
-        onError: function (errorEvent) {
+        onError: function onError (errorEvent) {
             var e = errorEvent.error;
             if (!/^AssertionError/.test(e.name)) {
                 throw e;
@@ -64,7 +64,7 @@ function empower (assert, formatter, options) {
                         actual: e.actual,
                         expected: e.expected,
                         operator: e.operator,
-                        stackStartFunction: e.stackStartFunction
+                        stackStartFunction: e.stackStartFunction || onError
                     });
                 }
             }
