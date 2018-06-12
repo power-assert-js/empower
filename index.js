@@ -23,6 +23,7 @@ var define = require('./lib/define-properties');
 function empower (assert, formatter, options) {
     var config = assign(defaultOptions(), options);
     var eagerEvaluation = !(config.modifyMessageOnRethrow || config.saveContextOnRethrow);
+    // see: https://github.com/power-assert-js/empower/pull/26
     var shouldRecreateAssertionError = (function isStackUnchanged () {
         if (typeof assert !== 'function') {
             return false;
