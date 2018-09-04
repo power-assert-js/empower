@@ -11,6 +11,7 @@
     empower,
     baseAssert
 ) {
+    'use strict';
 
 function fakeFormatter (context) {
     throw new Error('formatter should not be called');
@@ -37,11 +38,11 @@ test(JSON.stringify(option) + ' argument is null Literal.', function () {
 test(JSON.stringify(option) + ' empowered function also acts like an assert function', function () {
     var falsy = 0;
     try {
-        eval('assert(falsy);');
+        eval('assert(falsy, "assertion message");');
         assert.ok(false, 'AssertionError should be thrown');
     } catch (e) {
         baseAssert(/^AssertionError/.test(e.name));
-        baseAssert.equal(e.message, '0 == true');
+        baseAssert.equal(e.message, 'assertion message');
         baseAssert(e.powerAssertContext === undefined);
     }
 });
@@ -55,7 +56,7 @@ suite(JSON.stringify(option) + ' assertion method with one argument', function (
             assert.ok(false, 'AssertionError should be thrown');
         } catch (e) {
             baseAssert(/^AssertionError/.test(e.name));
-            baseAssert.equal(e.message, '0 == true');
+            baseAssert(/^The expression evaluated to a falsy value/.test(e.message) || e.message === '0 == true');
             baseAssert(e.powerAssertContext === undefined);
         }
     });

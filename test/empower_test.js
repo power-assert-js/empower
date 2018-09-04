@@ -17,6 +17,8 @@
     escodegen,
     baseAssert
 ) {
+    'use strict';
+
     acornEs7Plugin(acorn);
 
     var weave = function (line, patterns) {
@@ -33,7 +35,7 @@
         var jsAST = acorn.parse(line, {ecmaVersion: 7, locations: true, sourceType: 'module', sourceFile: filepath, plugins: {asyncawait: true}});
         var espoweredAST = espower(jsAST, espowerOptions);
         var code = escodegen.generate(espoweredAST, {format: {compact: true}});
-        return babel.transform(code).code
+        return babel.transform(code).code;
     },
     fakeFormatter = function (context) {
         var events = context.args.reduce(function (accum, arg) {
@@ -60,12 +62,12 @@ test('default options behavior', function () {
 
     var falsy = 0;
     try {
-        eval(weave('assert(falsy);'));
+        eval(weave('assert(falsy, "assertion message");'));
         baseAssert.ok(false, 'AssertionError should be thrown');
     } catch (e) {
         baseAssert.equal(e.message, [
-            'test/some_test.js',
-            'assert(falsy)',
+            'assertion message test/some_test.js',
+            'assert(falsy, "assertion message")',
             '[{"value":0,"espath":"arguments/0"}]'
         ].join('\n'));
         baseAssert(/^AssertionError/.test(e.name));
@@ -148,20 +150,20 @@ test('assertion with optional message argument. ' + JSON.stringify(option), func
 test(JSON.stringify(option) + ' empowered function also acts like an assert function', function () {
     var falsy = 0;
     try {
-        eval(weave('assert(falsy);'));
+        eval(weave('assert(falsy, "assertion message");'));
         baseAssert.ok(false, 'AssertionError should be thrown');
     } catch (e) {
         if (option.modifyMessageOnRethrow) {
             baseAssert.equal(e.message, [
-                'test/some_test.js',
-                'assert(falsy)',
+                'assertion message test/some_test.js',
+                'assert(falsy, "assertion message")',
                 '[{"value":0,"espath":"arguments/0"}]'
             ].join('\n'));
         }
         if (option.saveContextOnRethrow) {
             baseAssert.deepEqual(e.powerAssertContext, {
                 "source":{
-                    "content": "assert(falsy)",
+                    "content": 'assert(falsy, "assertion message")',
                     "filepath": "test/some_test.js",
                     "line": 1
                 },
@@ -188,11 +190,9 @@ suite(JSON.stringify(option) + ' assertion method with one argument', function (
             baseAssert.ok(false, 'AssertionError should be thrown');
         } catch (e) {
             if (option.modifyMessageOnRethrow) {
-                baseAssert.equal(e.message, [
-                    'test/some_test.js',
-                    'assert.ok(falsy)',
-                    '[{"value":0,"espath":"arguments/0"}]'
-                ].join('\n'));
+                baseAssert(/test\/some_test\.js/.test(e.message));
+                baseAssert(/assert\.ok\(falsy\)/.test(e.message));
+                baseAssert(/\[{"value":0,"espath":"arguments\/0"}\]/.test(e.message));
             }
             if (option.saveContextOnRethrow) {
                 baseAssert.deepEqual(e.powerAssertContext, {
@@ -230,7 +230,6 @@ suite(JSON.stringify(option) + ' assertion method with two arguments', function 
                     'assert.equal(foo, bar)',
                     '[{"value":123,"espath":"arguments/0"},{"value":456,"espath":"arguments/1"}]'
                 ].join('\n'));
-                baseAssert(!/123 == 456/.test(e.stack));
             }
             if (option.saveContextOnRethrow) {
                 baseAssert.deepEqual(e.powerAssertContext, {
@@ -332,8 +331,8 @@ suite(JSON.stringify(option) + ' yield for assertion inside generator', function
                 }
                 if (option.modifyMessageOnRethrow) {
                     baseAssert.equal(e.message, [
-                        'test/some_test.js',
-                        'assert.ok(yield falsy)',
+                        'assertion message test/some_test.js',
+                        'assert.ok(yield falsy, "assertion message")',
                         'generator:true',
                         '[{"value":0,"espath":"arguments/0"}]'
                     ].join('\n'));
@@ -341,7 +340,7 @@ suite(JSON.stringify(option) + ' yield for assertion inside generator', function
                 if (option.saveContextOnRethrow) {
                     baseAssert.deepEqual(e.powerAssertContext, {
                         "source": {
-                            "content": "assert.ok(yield falsy)",
+                            "content": "assert.ok(yield falsy, \"assertion message\")",
                             "filepath": "test/some_test.js",
                             "generator": true,
                             "line": 2
@@ -369,7 +368,7 @@ suite(JSON.stringify(option) + ' yield for assertion inside generator', function
 
         var code = [
           'function *gen() {',
-          '    assert.ok(yield falsy);',
+          '    assert.ok(yield falsy, "assertion message");',
           '}',
           '',
           'var g = gen();',
@@ -395,8 +394,8 @@ suite(JSON.stringify(option) + ' await assertion inside async async function', f
                 }
                 if (option.modifyMessageOnRethrow) {
                     baseAssert.equal(e.message, [
-                        'test/some_test.js',
-                        'assert.ok(await falsy)',
+                        'assertion message test/some_test.js',
+                        'assert.ok(await falsy, "assertion message")',
                         'async:true',
                         '[{"value":0,"espath":"arguments/0"}]'
                     ].join('\n'));
@@ -404,7 +403,7 @@ suite(JSON.stringify(option) + ' await assertion inside async async function', f
                 if (option.saveContextOnRethrow) {
                     baseAssert.deepEqual(e.powerAssertContext, {
                         "source": {
-                            "content": "assert.ok(await falsy)",
+                            "content": "assert.ok(await falsy, \"assertion message\")",
                             "filepath": "test/some_test.js",
                             "async": true,
                             "line": 2
@@ -432,7 +431,7 @@ suite(JSON.stringify(option) + ' await assertion inside async async function', f
 
         var code = [
           'async function gen() {',
-          '    assert.ok(await falsy);',
+          '    assert.ok(await falsy, "assertion message");',
           '}',
           'gen()',
           '  .then(onResult)',
@@ -483,10 +482,10 @@ test('the case when assertion function call is not listed in patterns (even if m
 
     var falsy = 0;
     try {
-        eval(weave('assert(falsy);', patterns));
+        eval(weave('assert(falsy, "assertion message");', patterns));
         baseAssert.ok(false, 'AssertionError should be thrown');
     } catch (e) {
-        baseAssert.equal(e.message, '0 == true', 'should not be empowered');
+        baseAssert.equal(e.message, 'assertion message', 'should not be empowered');
         baseAssert(/^AssertionError/.test(e.name));
     }
 });
