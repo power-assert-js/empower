@@ -193,6 +193,7 @@ suite(JSON.stringify(option) + ' assertion method with one argument', function (
                 baseAssert(/test\/some_test\.js/.test(e.message));
                 baseAssert(/assert\.ok\(falsy\)/.test(e.message));
                 baseAssert(/\[{"value":0,"espath":"arguments\/0"}\]/.test(e.message));
+                baseAssert.equal(e.generatedMessage, false, 'set generatedMessage to false if modifyMessageOnRethrow');
             }
             if (option.saveContextOnRethrow) {
                 baseAssert.deepEqual(e.powerAssertContext, {
