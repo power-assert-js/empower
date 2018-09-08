@@ -7,7 +7,7 @@
  *   author: Takuto Wada <takuto.wada@gmail.com>
  *   contributors: James Talmage
  *   homepage: https://github.com/power-assert-js/empower
- *   version: 1.3.0
+ *   version: 1.3.1
  *
  * call-signature:
  *   license: MIT (http://opensource.org/licenses/MIT)
@@ -99,10 +99,12 @@ function empower (assert, formatter, options) {
                         operator: e.operator,
                         stackStartFunction: e.stackStartFunction || onError
                     });
+                    e.generatedMessage = false;
                 }
             }
             if (config.modifyMessageOnRethrow && !shouldRecreateAssertionError) {
                 e.message = poweredMessage;
+                e.generatedMessage = false;
             }
             if (config.saveContextOnRethrow) {
                 e.powerAssertContext = errorEvent.powerAssertContext;
