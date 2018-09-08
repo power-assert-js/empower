@@ -1,3 +1,11 @@
+### [1.3.1](https://github.com/power-assert-js/empower/releases/tag/v1.3.1) (2018-09-08)
+
+
+#### Bug Fixes
+
+* [to work well with Jest, treat power-assert message as "not generated" to avoid message override](https://github.com/power-assert-js/empower/pull/29)
+
+
 ## [1.3.0](https://github.com/power-assert-js/empower/releases/tag/v1.3.0) (2018-06-12)
 
 
