@@ -67,10 +67,12 @@ function empower (assert, formatter, options) {
                         operator: e.operator,
                         stackStartFunction: e.stackStartFunction || onError
                     });
+                    e.generatedMessage = false;
                 }
             }
             if (config.modifyMessageOnRethrow && !shouldRecreateAssertionError) {
                 e.message = poweredMessage;
+                e.generatedMessage = false;
             }
             if (config.saveContextOnRethrow) {
                 e.powerAssertContext = errorEvent.powerAssertContext;
